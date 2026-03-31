@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS anime_tracker;
+USE anime_tracker;
+
+CREATE TABLE IF NOT EXISTS animes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    status ENUM('visto', 'por_ver', 'quiero_ver') NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

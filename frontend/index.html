@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimeTracker - Gestiona tus animes</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📺 AnimeTracker</h1>
+
+        <!-- Formulario para agregar anime -->
+        <div class="form-card">
+            <div class="form-group">
+                <div class="input-field">
+                    <label>Título del anime</label>
+                    <input type="text" id="titleInput" placeholder="Ej: Shingeki no Kyojin" autocomplete="off">
+                </div>
+                <div class="input-field">
+                    <label>Estado</label>
+                    <select id="statusInput">
+                        <option value="por_ver">Por ver</option>
+                        <option value="visto">Visto</option>
+                        <option value="quiero_ver">Quiero ver</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label>Notas (opcional)</label>
+                    <input type="text" id="notesInput" placeholder="Alguna nota...">
+                </div>
+                <button id="addBtn">➕ Agregar</button>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="por_ver">Por ver</button>
+            <button class="filter-btn" data-filter="visto">Visto</button>
+            <button class="filter-btn" data-filter="quiero_ver">Quiero ver</button>
+        </div>
+
+        <!-- Grid de animes -->
+        <div id="animeGrid" class="anime-grid"></div>
+    </div>
+
+    <!-- Modal para editar -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Editar anime</span>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="input-field">
+                <label>Título</label>
+                <input type="text" id="editTitle" placeholder="Título">
+            </div>
+            <div class="input-field">
+                <label>Estado</label>
+                <select id="editStatus">
+                    <option value="por_ver">Por ver</option>
+                    <option value="visto">Visto</option>
+                    <option value="quiero_ver">Quiero ver</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label>Notas</label>
+                <input type="text" id="editNotes" placeholder="Notas">
+            </div>
+            <button id="saveEditBtn" style="margin-top: 1rem; width: 100%;">Guardar cambios</button>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
