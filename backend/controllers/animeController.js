@@ -1,6 +1,5 @@
 const AnimeModel = require('../models/animeModel');
 
-// Obtener todos
 exports.getAll = async (req, res) => {
     try {
         const animes = await AnimeModel.getAll();
@@ -11,14 +10,13 @@ exports.getAll = async (req, res) => {
     }
 };
 
-// Crear uno
 exports.create = async (req, res) => {
-    const { title, status, notes } = req.body;
+    const { title, status, notes, image_url } = req.body;
     if (!title || !status) {
         return res.status(400).json({ error: 'Título y estado son obligatorios' });
     }
     try {
-        const newAnime = await AnimeModel.create(title, status, notes);
+        const newAnime = await AnimeModel.create(title, status, notes, image_url);
         res.status(201).json(newAnime);
     } catch (error) {
         console.error(error);
@@ -26,15 +24,14 @@ exports.create = async (req, res) => {
     }
 };
 
-// Actualizar
 exports.update = async (req, res) => {
     const { id } = req.params;
-    const { title, status, notes } = req.body;
+    const { title, status, notes, image_url } = req.body;
     if (!title || !status) {
         return res.status(400).json({ error: 'Título y estado son obligatorios' });
     }
     try {
-        const affected = await AnimeModel.update(id, title, status, notes);
+        const affected = await AnimeModel.update(id, title, status, notes, image_url);
         if (affected === 0) {
             return res.status(404).json({ error: 'Anime no encontrado' });
         }
@@ -45,7 +42,6 @@ exports.update = async (req, res) => {
     }
 };
 
-// Eliminar
 exports.delete = async (req, res) => {
     const { id } = req.params;
     try {

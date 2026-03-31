@@ -1,3 +1,5 @@
+const imageInput = document.getElementById('imageInput');
+const editImage = document.getElementById('editImage');
 const API_URL = '/api/animes'; // Ruta relativa, servida por el backend
 let currentFilter = 'all';
 let animes = [];
@@ -40,6 +42,7 @@ function renderAnimes() {
     }
     animeGrid.innerHTML = filtered.map(anime => `
         <div class="anime-card" data-id="${anime.id}">
+            ${anime.image_url ? `<img src="${escapeHtml(anime.image_url)}" alt="${escapeHtml(anime.title)}" class="anime-image" onerror="this.style.display='none'">` : ''}
             <div class="anime-title">${escapeHtml(anime.title)}</div>
             <span class="anime-status status-${anime.status.replace(/_/g, '-')}">
                 ${getStatusText(anime.status)}
@@ -75,6 +78,7 @@ async function addAnime() {
     const title = titleInput.value.trim();
     const status = statusInput.value;
     const notes = notesInput.value.trim();
+    const image_url = imageInput.value.trim(); // nueva
     if (!title) {
         alert('Por favor ingresa el título del anime.');
         return;
@@ -83,11 +87,12 @@ async function addAnime() {
         const res = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title, status, notes })
+            body: JSON.stringify({ title, status, notes, image_url })
         });
         if (res.ok) {
             titleInput.value = '';
             notesInput.value = '';
+            imageInput.value = ''; // limpiar
             loadAnimes();
         } else {
             alert('Error al agregar anime.');
@@ -121,6 +126,7 @@ function openEditModal(id) {
     editTitle.value = anime.title;
     editStatus.value = anime.status;
     editNotes.value = anime.notes || '';
+    editImage.value = anime.image_url || ''; // nueva
     editModal.style.display = 'flex';
 }
 
@@ -129,6 +135,7 @@ async function saveEdit() {
     const updatedTitle = editTitle.value.trim();
     const updatedStatus = editStatus.value;
     const updatedNotes = editNotes.value.trim();
+    const updatedImage = editImage.value.trim(); // nueva
     if (!updatedTitle) {
         alert('El título no puede estar vacío.');
         return;
@@ -137,7 +144,12 @@ async function saveEdit() {
         const res = await fetch(`${API_URL}/${editingId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title: updatedTitle, status: updatedStatus, notes: updatedNotes })
+            body: JSON.stringify({ 
+                title: updatedTitle, 
+                status: updatedStatus, 
+                notes: updatedNotes,
+                image_url: updatedImage
+            })
         });
         if (res.ok) {
             closeModal();
