@@ -7,6 +7,9 @@ const animeRoutes = require('./routes/animeRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
 
 // Middlewares
 app.use(cors());
@@ -18,10 +21,4 @@ app.use('/api/animes', animeRoutes);
 // Cualquier otra ruta que no sea estática ni API, devuelve index.html
 app.use((req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
-});
-
-
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
-    console.log(`Accesible en tu red local en http://<tu-ip-local>:${PORT}`);
 });
