@@ -1,5 +1,6 @@
 const imageInput = document.getElementById('imageInput');
 const editImage = document.getElementById('editImage');
+const darkModeToggle = document.getElementById('darkModeToggle');
 const API_URL = '/api/animes'; // Ruta relativa, servida por el backend
 let currentFilter = 'all';
 let animes = [];
@@ -18,6 +19,22 @@ const editStatus = document.getElementById('editStatus');
 const editNotes = document.getElementById('editNotes');
 const saveEditBtn = document.getElementById('saveEditBtn');
 const closeModalSpan = document.querySelector('.close-modal');
+
+// Cargar tema guardado o detectar preferencia del sistema
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    applyTheme(savedTheme);
+} else {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefersDark ? 'dark' : 'light');
+}
+
+// Escuchar clic en el botón
+darkModeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+});
 
 // Cargar animes desde API
 async function loadAnimes() {
@@ -191,6 +208,19 @@ closeModalSpan.addEventListener('click', closeModal);
 window.addEventListener('click', (e) => {
     if (e.target === editModal) closeModal();
 });
+
+
+// Función para aplicar el tema
+function applyTheme(theme) {
+    if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        darkModeToggle.textContent = '☀️';
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        darkModeToggle.textContent = '🌙';
+    }
+    localStorage.setItem('theme', theme);
+}
 
 // Inicializar
 loadAnimes();

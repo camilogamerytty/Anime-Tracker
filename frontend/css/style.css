@@ -1,3 +1,77 @@
+/* Variables del tema claro (por defecto) */
+:root {
+    --bg-primary: #f9fafb;
+    --bg-secondary: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+    --text-tertiary: #6b7280;
+    --border-color: #e5e7eb;
+    --card-border: #f0f2f5;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    --button-bg: #3b82f6;
+    --button-hover: #2563eb;
+    --filter-bg: #ffffff;
+    --filter-btn-bg: transparent;
+    --filter-btn-hover: #e2e8f0;
+    --filter-btn-active: #3b82f6;
+    --filter-btn-active-text: white;
+    --status-visto-bg: #10b98120;
+    --status-visto-text: #047857;
+    --status-por-ver-bg: #f59e0b20;
+    --status-por-ver-text: #b45309;
+    --status-quiero-ver-bg: #8b5cf620;
+    --status-quiero-ver-text: #6d28d9;
+    --edit-btn-bg: #eef2ff;
+    --edit-btn-hover: #e0e7ff;
+    --edit-btn-text: #3b82f6;
+    --delete-btn-bg: #fee2e2;
+    --delete-btn-hover: #fecaca;
+    --delete-btn-text: #dc2626;
+    --modal-overlay: rgba(0,0,0,0.5);
+    --input-border: #e5e7eb;
+    --input-focus-ring: rgba(59,130,246,0.2);
+    --empty-state-text: #9ca3af;
+}
+
+/* Tema oscuro */
+[data-theme="dark"] {
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-tertiary: #9ca3af;
+    --border-color: #374151;
+    --card-border: #374151;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 6px -2px rgba(0, 0, 0, 0.2), 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    --button-bg: #3b82f6;
+    --button-hover: #60a5fa;
+    --filter-bg: #1f2937;
+    --filter-btn-bg: transparent;
+    --filter-btn-hover: #374151;
+    --filter-btn-active: #3b82f6;
+    --filter-btn-active-text: white;
+    --status-visto-bg: #10b98130;
+    --status-visto-text: #6ee7b7;
+    --status-por-ver-bg: #f59e0b30;
+    --status-por-ver-text: #fcd34d;
+    --status-quiero-ver-bg: #8b5cf630;
+    --status-quiero-ver-text: #c4b5fd;
+    --edit-btn-bg: #3b82f620;
+    --edit-btn-hover: #3b82f630;
+    --edit-btn-text: #60a5fa;
+    --delete-btn-bg: #dc262620;
+    --delete-btn-hover: #dc262630;
+    --delete-btn-text: #f87171;
+    --modal-overlay: rgba(0,0,0,0.7);
+    --input-border: #4b5563;
+    --input-focus-ring: rgba(96,165,250,0.3);
+    --empty-state-text: #6b7280;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,10 +80,11 @@
 
 body {
     font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: #f9fafb;
-    color: #1f2937;
+    background: var(--bg-primary);
+    color: var(--text-primary);
     line-height: 1.5;
     padding: 2rem 1rem;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -17,12 +92,18 @@ body {
     margin: 0 auto;
 }
 
-/* Header */
+/* Header con botón de tema */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
 h1 {
     font-size: 2rem;
     font-weight: 600;
     letter-spacing: -0.025em;
-    margin-bottom: 2rem;
     background: linear-gradient(135deg, #3b82f6, #8b5cf6);
     background-clip: text;
     -webkit-background-clip: text;
@@ -30,14 +111,30 @@ h1 {
     display: inline-block;
 }
 
+.dark-mode-btn {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 2rem;
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-primary);
+}
+
+.dark-mode-btn:hover {
+    background: var(--filter-btn-hover);
+    transform: scale(1.05);
+}
+
 /* Formulario */
 .form-card {
-    background: white;
+    background: var(--bg-secondary);
     border-radius: 1.5rem;
-    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
     padding: 1.5rem;
     margin-bottom: 2rem;
-    transition: box-shadow 0.2s;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group {
@@ -57,27 +154,28 @@ h1 {
     font-size: 0.875rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
-    color: #4b5563;
+    color: var(--text-secondary);
 }
 
 .input-field input, .input-field select {
     width: 100%;
     padding: 0.75rem 1rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--input-border);
     border-radius: 0.75rem;
     font-size: 0.95rem;
     transition: all 0.2s;
-    background-color: #fff;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
 .input-field input:focus, .input-field select:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    border-color: var(--button-bg);
+    box-shadow: 0 0 0 3px var(--input-focus-ring);
 }
 
 button {
-    background: #3b82f6;
+    background: var(--button-bg);
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -90,7 +188,7 @@ button {
 }
 
 button:hover {
-    background: #2563eb;
+    background: var(--button-hover);
 }
 
 button:active {
@@ -103,32 +201,34 @@ button:active {
     gap: 0.75rem;
     flex-wrap: wrap;
     margin-bottom: 2rem;
-    background: white;
+    background: var(--filter-bg);
     padding: 0.75rem 1rem;
     border-radius: 3rem;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: var(--shadow-sm);
+    transition: background 0.3s ease;
 }
 
 .filter-btn {
-    background: transparent;
-    color: #4b5563;
+    background: var(--filter-btn-bg);
+    color: var(--text-secondary);
     padding: 0.5rem 1rem;
     border-radius: 2rem;
     font-size: 0.875rem;
     font-weight: 500;
+    transition: all 0.2s;
 }
 
 .filter-btn.active {
-    background: #3b82f6;
-    color: white;
+    background: var(--filter-btn-active);
+    color: var(--filter-btn-active-text);
 }
 
 .filter-btn:hover:not(.active) {
-    background: #e2e8f0;
-    color: #1f2937;
+    background: var(--filter-btn-hover);
+    color: var(--text-primary);
 }
 
-/* Lista de animes (grid) */
+/* Grid de animes */
 .anime-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -136,18 +236,27 @@ button:active {
 }
 
 .anime-card {
-    background: white;
+    background: var(--bg-secondary);
     border-radius: 1.25rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-sm);
     padding: 1.25rem;
     transition: all 0.2s;
-    border: 1px solid #f0f2f5;
+    border: 1px solid var(--card-border);
 }
 
 .anime-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    border-color: #e2e8f0;
+    box-shadow: var(--shadow-hover);
+    border-color: var(--border-color);
+}
+
+.anime-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    margin-bottom: 0.75rem;
+    background-color: var(--bg-primary);
 }
 
 .anime-title {
@@ -155,6 +264,7 @@ button:active {
     font-weight: 600;
     margin-bottom: 0.5rem;
     word-break: break-word;
+    color: var(--text-primary);
 }
 
 .anime-status {
@@ -167,23 +277,23 @@ button:active {
 }
 
 .status-visto {
-    background: #10b98120;
-    color: #047857;
+    background: var(--status-visto-bg);
+    color: var(--status-visto-text);
 }
-.status-por_ver {
-    background: #f59e0b20;
-    color: #b45309;
+.status-por-ver {
+    background: var(--status-por-ver-bg);
+    color: var(--status-por-ver-text);
 }
-.status-quiero_ver {
-    background: #8b5cf620;
-    color: #6d28d9;
+.status-quiero-ver {
+    background: var(--status-quiero-ver-bg);
+    color: var(--status-quiero-ver-text);
 }
 
 .anime-notes {
     font-size: 0.875rem;
-    color: #6b7280;
+    color: var(--text-tertiary);
     margin-bottom: 1rem;
-    border-top: 1px solid #f0f2f5;
+    border-top: 1px solid var(--border-color);
     padding-top: 0.75rem;
 }
 
@@ -199,32 +309,33 @@ button:active {
     font-size: 0.75rem;
     border-radius: 0.5rem;
     cursor: pointer;
+    transition: all 0.2s;
 }
 
 .edit-btn {
-    background: #eef2ff;
-    color: #3b82f6;
+    background: var(--edit-btn-bg);
+    color: var(--edit-btn-text);
 }
 .edit-btn:hover {
-    background: #e0e7ff;
+    background: var(--edit-btn-hover);
 }
 .delete-btn {
-    background: #fee2e2;
-    color: #dc2626;
+    background: var(--delete-btn-bg);
+    color: var(--delete-btn-text);
 }
 .delete-btn:hover {
-    background: #fecaca;
+    background: var(--delete-btn-hover);
 }
 
 .empty-state {
     text-align: center;
     padding: 3rem;
-    background: white;
+    background: var(--bg-secondary);
     border-radius: 1.5rem;
-    color: #9ca3af;
+    color: var(--empty-state-text);
 }
 
-/* Modal para editar */
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -232,19 +343,20 @@ button:active {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: var(--modal-overlay);
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
 
 .modal-content {
-    background: white;
+    background: var(--bg-secondary);
     border-radius: 1.5rem;
     padding: 1.5rem;
     width: 90%;
     max-width: 450px;
-    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-md);
+    color: var(--text-primary);
 }
 
 .modal-header {
@@ -259,12 +371,9 @@ button:active {
     cursor: pointer;
     font-size: 1.5rem;
     line-height: 1;
+    color: var(--text-tertiary);
 }
-.anime-image {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 0.75rem;
-    margin-bottom: 0.75rem;
-    background-color: #f3f4f6;
+
+.close-modal:hover {
+    color: var(--text-primary);
 }
