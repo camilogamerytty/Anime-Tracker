@@ -377,3 +377,57 @@ button:active {
 .close-modal:hover {
     color: var(--text-primary);
 }
+
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-group {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .input-field {
+        min-width: 100%;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .filters {
+        overflow-x: auto;
+        white-space: nowrap;
+        flex-wrap: nowrap;
+        padding: 0.5rem;
+    }
+
+    .filter-btn {
+        flex-shrink: 0;
+    }
+
+    .anime-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .anime-card {
+        padding: 1rem;
+    }
+
+    .anime-image {
+        height: 140px;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+}

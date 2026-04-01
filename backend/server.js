@@ -20,6 +20,8 @@ app.use((req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
-app.listen(PORT, () => {
+
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`Accesible en tu red local en http://<tu-ip-local>:${PORT}`);
 });
