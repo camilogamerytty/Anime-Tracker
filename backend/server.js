@@ -16,9 +16,9 @@ app.use(cors());
 app.use(express.json());
 
 
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, 'frontend')));
 app.use('/api/animes', animeRoutes);
 // Cualquier otra ruta que no sea estática ni API, devuelve index.html
 app.use((req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+    res.sendFile(path.join(__dirname, 'frontend/index.html'));
 });
