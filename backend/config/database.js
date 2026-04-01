@@ -1,18 +1,17 @@
 const mysql = require('mysql2/promise');
-require('dotenv').config();
 
 let pool;
 
-if (process.env.DATABASE_URL) {
-  // En Railway, cuando añades un MySQL plugin, te da DATABASE_URL
-  pool = mysql.createPool(process.env.DATABASE_URL);
+if (process.env.MYSQL_URL) {
+  // En Railway, usamos la URL completa que proporciona la variable MYSQL_URL
+  pool = mysql.createPool(process.env.MYSQL_URL);
 } else {
-  // Local development
+  // Configuración local (con tus credenciales locales)
   pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'anime_tracker',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
