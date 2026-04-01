@@ -14,6 +14,9 @@ let animes = [];
 let editingId = null;
 
 // Elementos DOM
+const fab = document.getElementById('fab');
+const navItems = document.querySelectorAll('.nav-item');
+const modalTitle = document.getElementById('modalTitle'); // si agregaste ese span
 const animeGrid = document.getElementById('animeGrid');
 const addBtn = document.getElementById('addBtn');
 const titleInput = document.getElementById('titleInput');
@@ -191,7 +194,8 @@ function openEditModal(id) {
     editTitle.value = anime.title;
     editStatus.value = anime.status;
     editNotes.value = anime.notes || '';
-    editImage.value = anime.image_url || ''; // nueva
+    editImage.value = anime.image_url || '';
+    modalTitle.textContent = 'Editar anime';
     editModal.style.display = 'flex';
 }
 
@@ -205,29 +209,54 @@ async function saveEdit() {
         alert('El título no puede estar vacío.');
         return;
     }
-    const updatedAnime = {
-        id: editingId,
-        title: updatedTitle,
-        status: updatedStatus,
-        notes: updatedNotes,
-        image_url: updatedImage
-    };
-    
-    // Optimistic update
-    const index = animes.findIndex(a => a.id === editingId);
-    if (index !== -1) {
-        animes[index] = { ...animes[index], ...updatedAnime };
-        await saveLocalAnimes(animes);
-        renderAnimes();
+
+    if (editingId === null) {
+        // Crear nuevo anime
+        try {
+            const res = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: updatedTitle,
+                    status: updatedStatus,
+                    notes: updatedNotes,
+                    image_url: updatedImage
+                })
+            });
+            if (res.ok) {
+                closeModal();
+                loadAnimes();
+            } else {
+                alert('Error al agregar anime.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Error de conexión.');
+        }
+    } else {
+        // Actualizar existente (código que ya tenías)
+        try {
+            const res = await fetch(`${API_URL}/${editingId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: updatedTitle,
+                    status: updatedStatus,
+                    notes: updatedNotes,
+                    image_url: updatedImage
+                })
+            });
+            if (res.ok) {
+                closeModal();
+                loadAnimes();
+            } else {
+                alert('Error al actualizar.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Error de conexión.');
+        }
     }
-    
-    // Registrar operación pendiente
-    await addPendingOperation('update', updatedAnime);
-    
-    closeModal();
-    syncPendingOperations().then(() => {
-        fetchFromServerAndUpdateLocal();
-    });
 }
 
 function closeModal() {
@@ -410,8 +439,29 @@ async function fetchFromServerAndUpdateLocal() {
     }
 }
 
+// Reemplazar filtros
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        currentFilter = item.dataset.filter;
+        renderAnimes();
+    });
+});
 
-// Inicializar
+// Activar filtro inicial (Todos)
+document.querySelector('.nav-item[data-filter="all"]').classList.add('active');
+fab.addEventListener('click', () => {
+    // Limpiar campos
+    editTitle.value = '';
+    editStatus.value = 'por_ver';
+    editNotes.value = '';
+    editImage.value = '';
+    editingId = null;
+    modalTitle.textContent = 'Agregar anime';
+    editModal.style.display = 'flex';
+});
+
 loadAnimes();
 // Inicializar
 (async () => {

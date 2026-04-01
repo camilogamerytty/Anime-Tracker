@@ -15,6 +15,28 @@
             <h1>📺 AnimeTracker</h1>
             <button id="darkModeToggle" class="dark-mode-btn">🌙</button>
         </header>
+        <!-- Botón flotante para agregar anime -->
+        <button id="fab" class="fab">+</button>
+
+        <!-- Navegación inferior -->
+        <div class="bottom-nav">
+            <button class="nav-item" data-filter="all">
+                <span class="nav-icon">📺</span>
+                <span>Todos</span>
+            </button>
+            <button class="nav-item" data-filter="por_ver">
+                <span class="nav-icon">⏳</span>
+                <span>Por ver</span>
+            </button>
+            <button class="nav-item" data-filter="visto">
+                <span class="nav-icon">✅</span>
+                <span>Visto</span>
+            </button>
+            <button class="nav-item" data-filter="quiero_ver">
+                <span class="nav-icon">⭐</span>
+                <span>Quiero ver</span>
+            </button>
+        </div>
 
         <!-- Formulario para agregar anime -->
         <div class="form-card">
@@ -59,7 +81,7 @@
     <div id="editModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span>Editar anime</span>
+                <span id="modalTitle">Editar anime</span>
                 <span class="close-modal">&times;</span>
             </div>
             <div class="input-field">
